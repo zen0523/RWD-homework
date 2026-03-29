@@ -3,230 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>訂單管理系統</title>
+  <title>訂單查詢</title>
   <link rel="stylesheet" href="css/reset.css" />
   <link rel="stylesheet" href="css/orders.css" />
 </head>
 <body>
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <div class="logo">
-        <div class="logo-icon">O</div>
-        <span class="logo-text">Odoo 訂單</span>
-      </div>
-      <button class="sidebar-toggle" id="sidebarToggle" aria-label="切換選單">
-        <span></span><span></span><span></span>
-      </button>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">O</div>
+        <span>我的商店</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html">首頁</a>
+        <a href="orders.html" class="active">訂單查詢</a>
+      </nav>
     </div>
-    <nav class="sidebar-nav">
-      <a href="index.html" class="nav-item">
-        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        首頁
-      </a>
-      <a href="orders.html" class="nav-item active">
-        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1" ry="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg>
-        訂單列表
-      </a>
-      <a href="#" class="nav-item">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        待處理
-        <span class="badge" id="pendingBadge">0</span>
-      </a>
-      <a href="#" class="nav-item">
-        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        出貨管理
-      </a>
-      <a href="#" class="nav-item">
-        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-        財務報表
-      </a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="user-info">
-        <div class="avatar">A</div>
-        <div class="user-detail">
-          <span class="user-name">管理員</span>
-          <span class="user-role">Administrator</span>
-        </div>
+  </header>
+
+  <main>
+
+    <!-- Hero Search -->
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="hero-eyebrow">訂單查詢</p>
+        <h1 class="hero-title">查詢您的訂單狀態</h1>
+        <p class="hero-sub">輸入訂單編號，即時掌握最新進度</p>
+        <form class="search-form" id="searchForm" autocomplete="off">
+          <div class="search-field">
+            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+            <input
+              type="text"
+              id="orderInput"
+              placeholder="例如：S00001"
+              maxlength="20"
+              aria-label="訂單編號"
+            />
+          </div>
+          <button type="submit" class="search-btn">查詢</button>
+        </form>
+        <p class="search-hint" id="searchError"></p>
       </div>
-    </div>
-  </aside>
+    </section>
 
-  <!-- Main Content -->
-  <main class="main-content" id="mainContent">
-    <!-- Top Bar -->
-    <header class="topbar">
-      <div class="topbar-left">
-        <button class="menu-btn" id="menuBtn" aria-label="選單">
-          <span></span><span></span><span></span>
-        </button>
-        <h1 class="page-title">訂單管理</h1>
-      </div>
-      <div class="topbar-right">
-        <div class="search-box">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="searchInput" placeholder="搜尋訂單編號、客戶..." />
-        </div>
-        <button class="btn btn-primary" id="refreshBtn">
-          <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
-          重新整理
-        </button>
-        <button class="btn btn-outline" id="connectBtn">
-          <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-          連接 Odoo
-        </button>
-      </div>
-    </header>
+    <!-- Result Area -->
+    <section class="result-section" id="resultSection" aria-live="polite">
+      <!-- Filled by JS -->
+    </section>
 
-    <div class="content-wrapper">
-      <!-- Stats Cards -->
-      <section class="stats-grid" aria-label="統計總覽">
-        <div class="stat-card">
-          <div class="stat-icon stat-icon--total">
-            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4"/></svg>
-          </div>
-          <div class="stat-info">
-            <span class="stat-label">總訂單數</span>
-            <span class="stat-value" id="statTotal">0</span>
-          </div>
-          <div class="stat-trend trend-up" id="trendTotal">—</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon stat-icon--pending">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="stat-info">
-            <span class="stat-label">待確認</span>
-            <span class="stat-value" id="statDraft">0</span>
-          </div>
-          <div class="stat-trend" id="trendDraft">—</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon stat-icon--processing">
-            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <div class="stat-info">
-            <span class="stat-label">處理中</span>
-            <span class="stat-value" id="statSale">0</span>
-          </div>
-          <div class="stat-trend trend-up" id="trendSale">—</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon stat-icon--done">
-            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <div class="stat-info">
-            <span class="stat-label">已完成</span>
-            <span class="stat-value" id="statDone">0</span>
-          </div>
-          <div class="stat-trend trend-up" id="trendDone">—</div>
-        </div>
-      </section>
-
-      <!-- Filters -->
-      <section class="filters-bar">
-        <div class="filter-tabs" role="tablist">
-          <button class="filter-tab active" data-filter="all" role="tab">全部</button>
-          <button class="filter-tab" data-filter="draft" role="tab">待確認</button>
-          <button class="filter-tab" data-filter="sale" role="tab">確認中</button>
-          <button class="filter-tab" data-filter="done" role="tab">已完成</button>
-          <button class="filter-tab" data-filter="cancel" role="tab">已取消</button>
-        </div>
-        <div class="filter-actions">
-          <select id="sortSelect" class="select-input">
-            <option value="date_order desc">最新訂單</option>
-            <option value="date_order asc">最早訂單</option>
-            <option value="amount_total desc">金額高到低</option>
-            <option value="amount_total asc">金額低到高</option>
-          </select>
-        </div>
-      </section>
-
-      <!-- Order Table -->
-      <section class="table-section">
-        <div class="table-header">
-          <span class="result-count">顯示 <strong id="resultCount">0</strong> 筆訂單</span>
-        </div>
-        <div class="table-wrapper">
-          <table class="order-table" id="orderTable">
-            <thead>
-              <tr>
-                <th>訂單編號</th>
-                <th>建立日期</th>
-                <th>客戶名稱</th>
-                <th>銷售人員</th>
-                <th>金額</th>
-                <th>狀態</th>
-                <th>操作</th>
-              </tr>
-            </thead>
-            <tbody id="orderTableBody">
-              <tr class="loading-row">
-                <td colspan="7">
-                  <div class="loading-state">
-                    <div class="spinner"></div>
-                    <span>載入中...</span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- Pagination -->
-        <div class="pagination" id="pagination"></div>
-      </section>
-    </div>
   </main>
 
-  <!-- Connect Modal -->
-  <div class="modal-overlay" id="connectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal">
-      <div class="modal-header">
-        <h2 id="modalTitle">連接 Odoo 後端</h2>
-        <button class="modal-close" id="modalClose" aria-label="關閉">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="odooUrl">Odoo 伺服器網址</label>
-          <input type="url" id="odooUrl" class="form-input" placeholder="https://your-odoo.com" />
-        </div>
-        <div class="form-group">
-          <label for="odooDb">資料庫名稱</label>
-          <input type="text" id="odooDb" class="form-input" placeholder="your_database" />
-        </div>
-        <div class="form-group">
-          <label for="odooUser">帳號</label>
-          <input type="text" id="odooUser" class="form-input" placeholder="admin" />
-        </div>
-        <div class="form-group">
-          <label for="odooPass">密碼</label>
-          <input type="password" id="odooPass" class="form-input" placeholder="••••••••" />
-        </div>
-        <div class="alert alert-info" id="demoNote">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          未連接時將顯示示範資料
-        </div>
-        <div class="alert alert-error" id="connectError" style="display:none"></div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline" id="useDemoBtn">使用示範資料</button>
-        <button class="btn btn-primary" id="connectSubmitBtn">連接</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Order Detail Drawer -->
-  <div class="drawer-overlay" id="drawerOverlay"></div>
-  <aside class="drawer" id="orderDrawer" aria-label="訂單詳情">
-    <div class="drawer-header">
-      <h2 id="drawerTitle">訂單詳情</h2>
-      <button class="drawer-close" id="drawerClose" aria-label="關閉">&times;</button>
-    </div>
-    <div class="drawer-body" id="drawerBody">
-      <!-- filled by JS -->
-    </div>
-  </aside>
+  <footer class="site-footer">
+    <p>© 2024 我的商店．如有疑問請聯繫客服</p>
+  </footer>
 
   <script src="js/orders.js"></script>
 </body>
